@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ block.super }}{% endblock %}
+
+{% block content %}
+  <nav class="navbar navbar-expand-sm navbar-dark bg-tinted">
+    <div class="container-fluid py-1 px-4">
+      <a class="navbar-brand" href="#">Personal Diary</a>
+      <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-items-collapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbar-items-collapse">
+        <!-- <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+        </ul> -->
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="btn btn-outline-light ps-1" href="{% url 'dashboard' %}">
+              <i class="mx-1 bi bi-box-arrow-in-right"></i> Open Web App
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="bg-tinted">
+    <div class="container text-center"> <!--style="max-width:800px"-->
+      <p class="h2 py-4">Your personal diary.<p>
+        <a class="btn bg-button ps-1 mb-5" href="{% url 'dashboard' %}">
+          <i class="mx-1 bi bi-box-arrow-in-right"></i> Get Started
+        </a>
+        {% load static %}
+        <img class="img-fluid d-block mx-auto rounded mt-5" src="{% static 'images/iconBackground.png' %}">
+      </div>
+
+      <div class="container text-center py-5">
+        <figure>
+          <blockquote class="blockquote">
+            <p class="mb-0">A diary for personal use</p>
+          </blockquote>
+        </figure>
+      </div>
+      <br>
+  </div>
+
+  <footer class="container-fluid bg-button">
+    <div class="d-flex justify-content-center p-0">
+      <a class="social-icon p-3" href="https://www.instagram.com/xzlmm6/">
+        <i class="bi bi-instagram"></i></a>
+      <a class="social-icon p-3" href="https://www.linkedin.com/in/nuraly-zharylkassyn-0936852a8/">
+        <i class="bi bi-linkedin"></i></a>
+      <a class="social-icon p-3" href="https://github.com/deruzodd">
+        <i class="bi bi-github"></i></a>
+    </div>
+    <br>
+  </footer>
+{% endblock %}

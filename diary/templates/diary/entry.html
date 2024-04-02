@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ diary.title }}{% endblock %}
+
+{% block content %}
+  <!-- this template is not being used -->
+  <div class="container-fluid">
+    <p>{{ entry.title }}</p>
+    <p>{{ entry.date_time }}</p>
+  </div>
+{% endblock %}

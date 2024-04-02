@@ -1,0 +1,199 @@
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  /* font-family: "Cabin Sketch",cursive; !important */
+  font-weight:bold;
+}
+.navbar {
+  border-radius: 0px !important;
+  border-style: none !important;
+}
+
+.html, .body {
+  height: 100vh;
+}
+
+/* dark mode styles */
+:root {
+  --dark-mode-background: var(--tinymce-dark2);
+  --dark-mode-text: #ffffff;
+  --dark-mode-border: #888888;
+  --light-mode-background: #ffffff;
+  --light-mode-text: #000000;
+  --light-mode-border: #888888;
+  --dm-primary: #5fa150;
+  --dm-secondary: var(--tinymce-dark1);
+
+  --tinymce-dark1: #222f3e;
+  --tinymce-dark2: #2f3742;
+}
+
+.dark-mode .bg-basic {
+  background-color: var(--dark-mode-background) !important;
+  color: var(--dark-mode-text) !important;
+  border-color: var(--dark-mode-border) !important;
+}
+.bg-basic {
+  background-color: var(--light-mode-background) !important;
+  color: var(--light-mode-text) !important;
+  border-color: var(--light-mode-border) !important;
+}
+.bg-tinted {
+  background-color: var(--dm-primary) !important;
+  color: var(--dark-mode-text) !important;
+}
+.dark-mode .bg-title {
+  background-color: var(--dm-secondary) !important;
+  color: var(--dm-primary) !important;
+}
+.bg-title {
+  background-color: var(--light-mode-background) !important;
+  color: var(--dm-primary) !important;
+}
+.dark-mode .bg-button {
+  background-color: var(--light-mode-background) !important;
+  color: var(--light-mode-text) !important;
+}
+.bg-button {
+  background-color: var(--dark-mode-background) !important;
+  color: var(--dark-mode-text) !important;
+}
+.bg-button-tinted {
+  background-color: var(--dm-primary) !important;
+  color: var(--dark-mode-text) !important;
+  border-color: var(--dm-primary) !important;
+}
+.dark-mode .bg-select {
+  border-color: var(--dark-mode-text) !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+.bg-select {
+  border-color: var(--light-mode-text) !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+/* dashboard styles */
+
+.profile-icon {
+  transition: color 0.2s;
+  color: #ffffff;
+}
+.profile-icon > i {
+  font-size: 1.6rem;
+}
+.profile-icon:hover {
+  color: #bbbbbb;
+}
+
+.filter-icon {
+  transition: color 0.2s;
+  color: #000000
+}
+.filter-icon:hover {
+  color: #555555;
+}
+.dark-mode .filter-icon {
+  transition: color 0.2s;
+  color: #ffffff
+}
+.dark-mode .filter-icon:hover {
+  color: #bbbbbb;
+}
+
+#entry-list-wrapper > .card {
+  transition: all 0.2s !important;
+}
+#entry-list-wrapper > .card:hover {
+  /* background-color: #eeeeee !important; */
+  filter: brightness(95%);
+}
+.dark-mode #entry-list-wrapper > .card:hover {
+  /* background-color: #333333 !important; */
+  filter:brightness(110%);
+}
+
+#entry-list-hr {
+  opacity: 1;
+}
+
+.card {
+  border-style: none;
+}
+
+@media (min-width: 476px) {
+  .modal-dialog {
+    max-width: 400px;
+    margin: 1.75rem auto;
+  }
+}
+
+form select.mood-input {
+  width: auto !important;
+}
+
+#location-container {
+  height: 30px;
+}
+
+.create-entry-button {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  width: 110px;
+  height: 70px;
+  z-index: 999;
+}
+
+/* entry editor styles */
+
+#save-entry-icon {
+  transition: color 0.2s;
+}
+#save-entry-icon:hover {
+  color: #555555;
+}
+.dark-mode #save-entry-icon:hover {
+  color: #bbbbbb;
+}
+
+#delete-entry-icon {
+  transition: color 0.2s;
+  color: #dc3545;
+}
+#delete-entry-icon:hover {
+  color: #aa3d46;
+}
+
+.tox-dialog__title {
+  font-family:"Cabin Sketch",cursive !important;
+  font-weight:bold !important;
+}
+.tox, .tox-button {
+  font-family: Neucha,-apple-system,system-ui,BlinkMacSystemFont,
+    "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;
+}
+button.tox-button {
+  border-radius: 25px !important;
+}
+
+@media (min-width: 576px) {
+  #date-short {
+    display: none;
+  }
+}
+@media (max-width: 576px) {
+  #date-long {
+    display: none;
+  }
+}
+
+/* index styles */
+
+.social-icon {
+  transition: color 0.2s;
+  color: #ffffff;
+}
+.social-icon > i {
+  font-size: 2rem;
+}
+.social-icon:hover {
+  color: #bbbbbb;
+}

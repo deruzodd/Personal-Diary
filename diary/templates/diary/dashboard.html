@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ block.super }} - Dashboard{% endblock %}
+
+{% load static %}
+
+{% block content %}
+  <nav class="navbar navbar-expand-sm bg-tinted">
+    <div class="container-fluid py-1 px-4">
+      <div class="w-25">
+      </div>
+      <a class="navbar-brand w-auto bg-tinted" href="#">Personal Diary</a>
+      <div class="w-25 pe-2">
+        {% if user.is_authenticated %}
+          <div class="d-flex justify-content-end align-items-center">
+            <span class="fs-6 bg-tinted">{{ user.username }}</span>
+            <a class="profile-icon" data-bs-toggle="modal" data-bs-target="#user-config-modal">
+              <i class="mx-1 bi bi-person-circle"></i>
+            </a>
+          </div>
+
+          <div id="user-config-modal" class="modal fade" data-bs-backdrop="static" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content bg-basic">
+                <div class="modal-header bg-basic">
+                  <h5 class="modal-title">Settings</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                  <form method="post" action="{% url 'user_config' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <label>Account</label>
+                    <div class="d-flex align-items-center px-3 py-2 mb-2">
+                      <div class="me-3">
+                        <i class="fs-1 mx-1 bi bi-person-circle"></i>
+                      </div>
+                      <div class="flex-grow-1">
+                        <span class="fs-3">{{ user.username }}</span>
+                      </div>
+                      <div class="">
+                        <a class="btn btn-sm btn-outline-danger" href="{% url 'logout' %}">Log out</a>
+                      </div>
+                    </div>
+                    {{ config_form.theme.label_tag }}
+                    <div class="px-3 py-2 mb-4">
+                      {{ config_form.theme }}
+                    </div>
+                    {{ config_form.font_size.label_tag }}
+                    <div class="px-3 py-2 mb-4">
+                      {{ config_form.font_size }}
+                    </div>
+                    <div class="text-end mt-5">
+                      <button type="submit" name="config_form" class="btn bg-button">Save changes</button>
+                    </div>
+                  </form>
+
+                </div
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="d-flex justify-content-end align-items-center">
+            <!-- <span class="fs-6 text-light">{{ user.username }}</span> -->
+            <a class="profile-icon" href="{% url 'login' %}">
+              <i class="mx-1 bi bi-person-circle"></i>
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-5 px-sm-5" style="max-width: 900px">
+    <div class="d-flex px-3">
+      <p class="fs-5 flex-grow-1">Your Entries</p>
+      <i class="filter-icon mx-1 bi bi-sort-down fs-3"
+        data-bs-toggle="tooltip" data-bs-placement="top" title="Reverse order"
+        onclick="reverseEntrySortOrder()"></i>
+    </div>
+    <hr id="entry-list-hr" class="mt-0">
+
+    <div id="entry-list-wrapper" class="d-flex flex-column-reverse">
+      <!-- <div class="card border-light w-100 my-1">
+        <div class="card-body">
+          <p class="fs-6 card-title">Today I ate a frog</p>
+          <h6 class="card-subtitle mb-2 text-muted">5. 9. 2021, 2:06 pm</h6>
+          <span class="mx-1">🙂</span>
+          <i class="mx-1 bi bi-geo-alt-fill"></i>Šiška, Ljubljana, Slovenia
+          <a href="{% url 'dashboard' %}" class="stretched-link"></a>
+        </div>
+        <hr class="my-0">
+      </div> -->
+      {% if user.is_authenticated %}
+        {% if entry_list %}
+        {% for entry in entry_list %}
+
+          <div class="card border-none w-100 my-1 bg-basic">
+            <div class="card-body">
+              <p class="fs-6 card-title">{{ entry.title }}</p>
+              <h6 class="card-subtitle mb-2 text-muted">{{ entry.date_time | date:'F d, Y - f A' | upper }}</h6>
+              <!-- <p class="card-text"></p> -->
+              {% if entry.mood %}
+                <!-- <i class="mx-1 bi bi-{{ entry.mood }}"></i> -->
+                {% if entry.mood == 1 %}
+                  <span class="mx-1">🙂</span>
+                {% elif entry.mood == 2 %}
+                  <span class="mx-1">😶</span>
+                {% elif entry.mood == 3 %}
+                  <span class="mx-1">🙁</span>
+                {% endif %}
+              {% endif %}
+              {% if entry.location %}
+                <i class="mx-1 bi bi-geo-alt-fill"></i>{{ entry.location }}
+              {% endif %}
+              <a href="{% url 'edit_entry' entry.uuid %}" class="stretched-link"></a>
+            </div>
+            <hr class="my-0">
+          </div>
+
+        {% endfor %}
+        {% endif %}
+      {% else %}
+        <div class="text-center">
+          <p class="">Log in to make your first entry.</p>
+          <a class="fst-italic text-muted" href="{% url 'demo_login' %}">
+            You can use a Guest account here. Your progress will not be saved.</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if user.is_authenticated %}
+    <div class="create-entry-button">
+      <a class="btn btn-lg rounded bg-button-tinted" data-bs-toggle="modal" data-bs-target="#create-entry-modal">
+        <i class="bi bi-plus"> New</i></a>
+    </div>
+
+    <div id="create-entry-modal" class="modal fade" data-bs-backdrop="static" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content bg-basic">
+          <div class="modal-header bg-basic">
+            <h5 class="modal-title">New Entry</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <form method="post" action="{% url 'dashboard' %}" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              {{ creation_form.title.label_tag }}
+              <div class="px-3 pt-2">
+                {{ creation_form.title }}
+              </div>
+              <br>
+              <p class="h5 text-center">{% now "F d, Y - f A" %}</p>
+              <div class="pt-4"></div>
+              {{ creation_form.mood.label_tag }}
+              {{ creation_form.mood }}
+              <div class="pt-4"></div>
+              {{ creation_form.location.label_tag }}
+              {{ creation_form.location.as_hidden }}
+              <br>
+              <div id="location-container" class="pt-1">
+                <span class="fs-5 text-center ps-4" id="location-text"></span>
+                <button id="location-button" type="button" class="btn bg-button btn-sm">Add a Location</button>
+              </div>
+              <br><br>
+              <div class="text-end">
+                <button type="submit" name="creation_form" class="btn bg-button-tinted">Create entry</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="create-entry-button">
+      <a class="btn btn-lg rounded bg-button-tinted" href="{% url 'login' %}">
+        <i class="bi bi-box-arrow-in-right fst-normal"> Login</i></a>
+    </div>
+  {% endif %}
+
+
+  {# Geolocation JS script and data #}
+  <div id="geolocation-data"
+    data-api-domain="{{ api_domain }}"
+    data-api-key="{{ api_key }}">
+  </div>
+  {% load static %}
+  <script type="text/javascript" src="{% static 'geolocation.js' %}"></script>
+
+{% endblock %}
